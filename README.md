@@ -1,6 +1,4 @@
-# Infra
-
-This is template repository for projects infra managed by [Pulumi](https://www.pulumi.com/)
+# log.skut.in
 
 ## Contributing
 
