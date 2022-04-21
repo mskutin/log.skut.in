@@ -1,0 +1,43 @@
+{
+  "name": "@skutin/log",
+  "version": "0.0.1",
+  "workspaces": [
+    "pulumi"
+  ],
+  "private": true,
+  "license": "MIT",
+  "contributors": [
+    "maksim.skutin@outlook.com"
+  ],
+  "maintainers": [
+    "maksim.skutin@outlook.com"
+  ],
+  "devDependencies": {
+    "@types/node": "^16.4.12",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
+    "eslint": "^7.1.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^2.0.4",
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "lint": "npx eslint . --ext .ts --no-error-on-unmatched-pattern",
+    "prettify": "prettier --write .",
+    "up:dev": "pulumi up --stack dev --cwd pulumi",
+    "preview:dev": "pulumi preview --stack dev --cwd pulumi",
+    "refresh:dev": "pulumi refresh --stack dev --cwd pulumi",
+    "output:dev": "pulumi stack output --stack dev --cwd pulumi",
+    "up:prod": "pulumi up --stack prod --cwd pulumi",
+    "preview:prod": "pulumi preview --stack prod --cwd pulumi",
+    "refresh:prod": "pulumi refresh --stack prod --cwd pulumi",
+    "output:prod": "pulumi stack output --stack prod --cwd pulumi"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=16"
+  }
+}

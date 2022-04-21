@@ -1,0 +1,23 @@
+IaC:
+  - pulumi/*
+  - pulumi/**/*
+
+Documentation:
+  - '*.md'
+  - ./*.md
+  - ./**/*.md
+  - docs/*
+  - docs/**/*
+
+Scripts:
+  - scripts/*
+  - scripts/**/*
+  - ./*.sh
+
+Configuration:
+  - ./*.yml
+  - ./*.yaml
+  - ./.*
+
+CI/CD:
+  - .github/workflows/*

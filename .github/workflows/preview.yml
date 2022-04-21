@@ -1,0 +1,66 @@
+name: Pulumi preview
+on:
+  pull_request:
+    paths:
+      - pulumi/**
+      - .github/workflows/**
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Extract Target Branch Name
+        run: echo "TARGET_BRANCH=$(echo ${GITHUB_BASE_REF##*/})" >> $GITHUB_ENV
+
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: Install pulumi
+        uses: pulumi/setup-pulumi@v2
+        with:
+          pulumi-version: 3.16.0
+
+      - run: npm install
+
+      # - name: Set AWS credentials
+      #   run: |
+      #     if [[ $TARGET_BRANCH == "master" ]] ;
+      #     then
+      #       echo "AWS_ROLE_TO_ASSUME=${{ secrets.AWS_ROLE_TO_ASSUME_PROD }}" >> $GITHUB_ENV
+      #       echo "PULUMI_STACK=prod" >> $GITHUB_ENV
+      #     else
+      #       echo "AWS_ROLE_TO_ASSUME=${{ secrets.AWS_ROLE_TO_ASSUME_DEV }}" >> $GITHUB_ENV
+      #       echo "PULUMI_STACK=dev" >> $GITHUB_ENV
+      #     fi
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-region: ap-southeast-1
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+      #     role-duration-seconds: 1800
+      #     role-session-name: pulumi-github-preview
+      #     role-skip-session-tagging: true
+
+      # - name: Preview infra
+      #   uses: pulumi/actions@v3
+      #   with:
+      #     command: preview
+      #     stack-name: ${{ env.PULUMI_STACK }}
+      #     work-dir: pulumi
+      #     comment-on-pr: true
+      #     github-token: ${{ github.token }}
+      #   env:
+      #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
