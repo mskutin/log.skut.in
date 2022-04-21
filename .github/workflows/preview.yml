@@ -8,11 +8,11 @@ jobs:
   preview:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    environment:
+      name: production
+      url: https://log.skut.in
 
     steps:
-      - name: Extract Target Branch Name
-        run: echo "TARGET_BRANCH=$(echo ${GITHUB_BASE_REF##*/})" >> $GITHUB_ENV
-
       - name: Checkout source code
         uses: actions/checkout@v2
         with:
@@ -32,24 +32,13 @@ jobs:
 
       - run: npm install
 
-      - name: Set AWS credentials
-        run: |
-          if [[ $TARGET_BRANCH == "master" ]] ;
-          then
-            echo "AWS_ROLE_TO_ASSUME=${{ secrets.AWS_ROLE_TO_ASSUME_PROD }}" >> $GITHUB_ENV
-            echo "PULUMI_STACK=prod" >> $GITHUB_ENV
-          else
-            echo "AWS_ROLE_TO_ASSUME=${{ secrets.AWS_ROLE_TO_ASSUME_DEV }}" >> $GITHUB_ENV
-            echo "PULUMI_STACK=dev" >> $GITHUB_ENV
-          fi
-
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: ap-southeast-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          role-to-assume: ${{ env.AWS_ROLE_TO_ASSUME }}
+          role-to-assume: ${{ secret.AWS_ROLE_TO_ASSUME }}
           role-duration-seconds: 1800
           role-session-name: pulumi-github-preview
           role-skip-session-tagging: true
@@ -58,7 +47,7 @@ jobs:
         uses: pulumi/actions@v3
         with:
           command: preview
-          stack-name: ${{ env.PULUMI_STACK }}
+          stack-name: prod
           work-dir: pulumi
           comment-on-pr: true
           github-token: ${{ github.token }}
