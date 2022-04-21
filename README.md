@@ -28,26 +28,3 @@ npm run preview:dev
 ## Github Actions
 
 Repository is aimed to be working with Github Actions CI/CD with minimal efforts
-
-## Organization-wide secrets
-
-The secrets below are set at **organization** level and don't require change:
-
-- AWS_ACCESS_KEY_ID
-- AWS_SECRET_ACCESS_KEY
-- ARTIFACTORY_USERNAME
-- ARTIFACTORY_API_KEY
-- PULUMI_ACCESS_TOKEN
-
-## Project secrets
-
-The following secrets are varying from project to project and require to be set upon repository creation:
-
-- AWS_ROLE_TO_ASSUME_DEV
-- AWS_ROLE_TO_ASSUME_PROD
-- MS_TEAMS_WEBHOOK_URI
-
-Once all secrets are set:
-
-- uncomment [preview.yml](./.github/workflows/preview.yml) and [up.yml](./.github/workflows/up.yml)
-- set correct PULUMI_ROOT for your project if you use different directory (not /pulumi) for Pulumi project files
