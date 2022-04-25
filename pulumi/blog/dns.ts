@@ -3,7 +3,7 @@ import { sharedPrefix } from './config';
 import { staticIp } from './compute';
 
 // imported via `pulumi import cloudflare:index/zone:Zone skut.in ${ZONE_ID}`
-const skut_in = new cloudflare.Zone(
+export const skut_in = new cloudflare.Zone(
   'skut.in',
   {
     plan: 'free',
