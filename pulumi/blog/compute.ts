@@ -15,9 +15,10 @@ const ghostInstance = new aws.lightsail.Instance(`${prefix}-vm`, {
   keyPairName: keyPair.name,
   availabilityZone: 'ap-southeast-1a',
   blueprintId: 'amazon_linux_2',
-  bundleId: 'nano_1_0',
+  bundleId: 'micro_1_0',
   userData: `
-    sudo amazon-linux-extras install docker git
+    sudo amazon-linux-extras install docker
+    sudo amazon-linux-extras install git
     sudo service docker start
     sudo usermod -a -G docker ec2-user
     sudo chkconfig docker on
